@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Status of the Tamil interface for each ArtCraft app: catalogs, pull requests, font pins and Tamil screenshots.">
+<title>ArtCraft in Tamil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@500;700;800&family=Hind+Madurai:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+/* Layout: a ledger of apps — one row per app, screenshot beside its pull requests; rows fold into cards on phones. */
+:root {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --ink: #17211f;
+  --muted: #5a6a66;
+  --line: #d9e1de;
+  --accent: #0b6e73;
+  --accent-soft: #e2f0ef;
+  --merged: #1f7a3a;   --merged-bg: #e3f3e7;
+  --open: #1f5fa8;     --open-bg: #e5eefa;
+  --review: #0b6e73;   --review-bg: #e2f0ef;
+  --blocked: #a5521a;  --blocked-bg: #fbeee2;
+  --quiet: #5f6764;    --quiet-bg: #eceeed;
+  --shadow: 0 1px 2px rgba(20, 40, 36, .06), 0 4px 14px rgba(20, 40, 36, .06);
+  --display: "Catamaran", "Noto Sans Tamil", "Latha", system-ui, sans-serif;
+  --body: "Hind Madurai", "Noto Sans Tamil", "Latha", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1615; --surface: #162120; --ink: #e4ecea; --muted: #9db0ab; --line: #2a3a37;
+    --accent: #5cc6c0; --accent-soft: #173533;
+    --merged: #7fd39a; --merged-bg: #173322;
+    --open: #8fb9ef;   --open-bg: #182a40;
+    --review: #5cc6c0; --review-bg: #173533;
+    --blocked: #f0a96b; --blocked-bg: #3a2616;
+    --quiet: #a7b1ae;  --quiet-bg: #232d2b;
+    --shadow: 0 1px 2px rgba(0,0,0,.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1615; --surface: #162120; --ink: #e4ecea; --muted: #9db0ab; --line: #2a3a37;
+  --accent: #5cc6c0; --accent-soft: #173533;
+  --merged: #7fd39a; --merged-bg: #173322;
+  --open: #8fb9ef;   --open-bg: #182a40;
+  --review: #5cc6c0; --review-bg: #173533;
+  --blocked: #f0a96b; --blocked-bg: #3a2616;
+  --quiet: #a7b1ae;  --quiet-bg: #232d2b;
+  --shadow: 0 1px 2px rgba(0,0,0,.4);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-block: 40px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: 32px;
+}
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.mono { font-family: var(--mono); font-size: .86em; }
+
+/* Header */
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 .ta { color: var(--accent); font-weight: 700; }
+.lede { margin: 0; max-width: 68ch; color: var(--muted); font-size: 16px; }
+
+/* Summary chips */
+.summary { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line);
+  font-size: 14px;
+}
+.chip b { font-family: var(--display); font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.chip.merged b { color: var(--merged); }
+.chip.open b { color: var(--open); }
+.chip.blocked b { color: var(--blocked); }
+.chip.quiet b { color: var(--quiet); }
+
+/* Ledger table */
+.ledger {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; min-width: 980px; }
+thead th {
+  text-align: left; font-weight: 600; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+tbody td { padding: 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:last-child td { border-bottom: 0; }
+.app { display: grid; gap: 2px; min-width: 120px; }
+.app strong { font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
+.app span { color: var(--muted); font-size: 13px; }
+.cell-note { color: var(--muted); font-size: 13px; margin-top: 4px; }
+td ul { margin: 0; padding-left: 18px; }
+td li + li { margin-top: 2px; }
+
+.shot {
+  display: block; width: 220px; padding: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  background: var(--bg); cursor: zoom-in; text-align: left; color: inherit; font: inherit;
+}
+.shot img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; }
+.shot figcaption, .shot .cap { display: block; padding: 6px 8px; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.noshot {
+  width: 220px; aspect-ratio: 16 / 9; border: 1px dashed var(--line); border-radius: 6px;
+  display: grid; place-content: center; text-align: center; gap: 2px; padding: 8px;
+  color: var(--muted); font-size: 12px; line-height: 1.35;
+}
+.noshot b { font-weight: 600; color: var(--ink); font-size: 13px; }
+
+.pill {
+  display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap;
+}
+.pill.merged { color: var(--merged); background: var(--merged-bg); }
+.pill.open { color: var(--open); background: var(--open-bg); }
+.pill.review { color: var(--review); background: var(--review-bg); }
+.pill.blocked { color: var(--blocked); background: var(--blocked-bg); }
+.pill.quiet { color: var(--quiet); background: var(--quiet-bg); }
+.status { display: grid; gap: 6px; min-width: 200px; max-width: 260px; }
+.status p { margin: 0; font-size: 13.5px; }
+
+/* Notes */
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; min-width: 0; }
+.note h2 { font-family: var(--display); font-weight: 700; font-size: 19px; margin: 0 0 8px; text-wrap: balance; }
+.note p, .note ul { margin: 0; }
+.note ul { padding-left: 18px; display: grid; gap: 6px; }
+.note p + ul, .note ul + p { margin-top: 8px; }
+footer { color: var(--muted); font-size: 13px; }
+
+/* Lightbox */
+dialog {
+  border: 0; padding: 0; background: var(--surface); color: var(--ink);
+  max-width: min(1400px, 96vw); width: 96vw; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+dialog::backdrop { background: rgba(8, 14, 13, .72); }
+dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: contain; background: #000; }
+.dlg-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; }
+.dlg-bar p { margin: 0; font-size: 14px; }
+.dlg-bar button {
+  font: inherit; font-size: 14px; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--ink); cursor: pointer;
+}
+
+/* Phone: each row becomes a card */
+@media (max-width: 760px) {
+  .wrap { padding-block: 24px 40px; gap: 24px; }
+  .ledger { background: transparent; border: 0; box-shadow: none; overflow: visible; }
+  table, thead, tbody, tr, td { display: block; min-width: 0; width: 100%; }
+  thead { display: none; }
+  tbody { display: grid; gap: 14px; }
+  tbody tr { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 6px 0; box-shadow: var(--shadow); }
+  tbody td { border: 0; padding: 8px 14px; }
+  tbody td[data-label]::before {
+    content: attr(data-label); display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+  }
+  .shot, .noshot { width: 100%; }
+  .status { max-width: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shot img { transition: transform .25s ease; }
+  .shot:hover img { transform: scale(1.03); }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Tamil interface · <span class="mono">ta</span> · checked 13 Nov 2026</div>
+    <h1>ArtCraft in Tamil <span class="ta">தமிழ்</span></h1>
+    <p class="lede">Where each Craft app's Tamil interface stands: the catalog in craft-i18n, the pull request that switches Tamil on in the app, the craft-fonts pin that brings Noto Sans Tamil, and a screenshot of the app running in Tamil where one exists.</p>
+    <div class="summary" aria-label="Summary">
+      <span class="chip merged"><b>1</b> app merged</span>
+      <span class="chip open"><b>7</b> app pull requests open</span>
+      <span class="chip open"><b>4</b> font pin pull requests open</span>
+      <span class="chip blocked"><b>1</b> app blocked</span>
+      <span class="chip quiet"><b>3</b> screenshots so far</span>
+    </div>
+  </header>
+
+  <section class="ledger" aria-label="Apps">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">App</th>
+          <th scope="col">Tamil screenshot</th>
+          <th scope="col">Tamil catalog</th>
+          <th scope="col">App pull request</th>
+          <th scope="col">Font pull request</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="app"><strong>PhotoCraft</strong><span>Image editing</span></div></td>
+          <td data-label="Tamil screenshot">
+            <button class="shot" type="button" data-full="shots/photocraft-ta.webp" data-cap="PhotoCraft in Tamil: menus, panels and the Export As dialog (4 Nov 2026)">
+              <img src="shots/photocraft-ta.webp" alt="PhotoCraft with Tamil menus, panels and the Export As dialog" loading="lazy">
+              <span class="cap">Export As dialog and panels · 4 Nov</span>
+            </button>
+          </td>
+          <td data-label="Tamil catalog">In the app; strings the current app shows added in <a href="https://github.com/storytold/craft-i18n/pull/226">craft-i18n #226</a></td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/photocraft/pull/10359">photocraft #10359</a></td>
+          <td data-label="Font pull request">—</td>
+          <td data-label="Status"><div class="status"><span class="pill merged">Merged 6 Nov</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>VectorCraft</strong><span>Vector illustration</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>Needs a local build of the app</div></td>
+          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span>, 8,842 rows, 3,022 of them messages<div class="cell-note">Also <span class="mono">vectorcraft.tsv</span> in craft-i18n #226</div></td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/vectorcraft/pull/6883">vectorcraft #6883</a></td>
+          <td data-label="Font pull request"><a href="https://github.com/storytold/vectorcraft/pull/6896">vectorcraft #6896</a></td>
+          <td data-label="Status"><div class="status"><span class="pill review">Open · font PR reviewed</span><p>FredApps reviewed #6896 and the fixes are in; bflatastic commented. Upstream main merged in six times today to keep it conflict-free.</p></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>PdfCraft</strong><span>PDF editing</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>Needs a local build of the app</div></td>
+          <td data-label="Tamil catalog"><span class="mono">pdfcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/pdfcraft/pull/7005">pdfcraft #7005</a><div class="cell-note">Replaces the closed #5735</div></td>
+          <td data-label="Font pull request"><a href="https://github.com/storytold/pdfcraft/pull/7129">pdfcraft #7129</a></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>CADCraft</strong><span>2D and 3D drafting</span></div></td>
+          <td data-label="Tamil screenshot">
+            <button class="shot" type="button" data-full="shots/cadcraft-ta.webp" data-cap="CADCraft in Tamil: menus, tool palettes, layers and properties around a sample drawing (12 Nov 2026)">
+              <img src="shots/cadcraft-ta.webp" alt="CADCraft with Tamil menus, tool palettes and properties panel around a bracket drawing" loading="lazy">
+              <span class="cap">Drawing workspace · 12 Nov</span>
+            </button>
+          </td>
+          <td data-label="Tamil catalog"><span class="mono">cadcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/cadcraft/pull/3105">cadcraft #3105</a></td>
+          <td data-label="Font pull request"><a href="https://github.com/storytold/cadcraft/pull/3106">cadcraft #3106</a></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>LightCraft</strong><span>Photo library and development</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>Needs a local build of the app</div></td>
+          <td data-label="Tamil catalog">In the app (none in craft-i18n)</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/lightcraft/pull/4200">lightcraft #4200</a></td>
+          <td data-label="Font pull request"><a href="https://github.com/storytold/lightcraft/pull/4199">lightcraft #4199</a></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>#4199 merges first; #4200 then needs its NOTICE and ATTRIBUTION conflicts resolved.</p></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>FilmCraft</strong><span>Video editing</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>Needs a local build of the app</div></td>
+          <td data-label="Tamil catalog"><span class="mono">filmcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/filmcraft/pull/4725">filmcraft #4725</a></td>
+          <td data-label="Font pull request">—</td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>WordCraft</strong><span>Word processing</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>No local checkout of the app</div></td>
+          <td data-label="Tamil catalog"><span class="mono">wordcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/wordcraft/pull/6392">wordcraft #6392</a></td>
+          <td data-label="Font pull request">—</td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>DeckCraft</strong><span>Presentations</span></div></td>
+          <td data-label="Tamil screenshot">
+            <button class="shot" type="button" data-full="shots/deckcraft-ta.webp" data-cap="DeckCraft in Tamil: the Transitions tab and the Preferences dialog, from the local Tamil branch (13 Nov 2026)">
+              <img src="shots/deckcraft-ta.webp" alt="DeckCraft with the Tamil Transitions tab and Preferences dialog" loading="lazy">
+              <span class="cap">Transitions tab and Preferences · 13 Nov · local build</span>
+            </button>
+          </td>
+          <td data-label="Tamil catalog"><span class="mono">deckcraft.tsv</span> in craft-i18n #226, 1,428 rows</td>
+          <td data-label="App pull request">Not opened yet<div class="cell-note">Ready on a local branch · claimed in <a href="https://github.com/storytold/deckcraft/issues/1785">deckcraft #1785</a></div></td>
+          <td data-label="Font pull request">Needed later<div class="cell-note">DeckCraft's pinned craft-fonts has no Tamil face</div></td>
+          <td data-label="Status"><div class="status"><span class="pill blocked">Blocked</span><p>Waits for <a href="https://github.com/storytold/deckcraft/pull/1488">#1488</a> (craft-i18n wiring) and <a href="https://github.com/storytold/deckcraft/pull/1530">#1530</a> (interface fonts). A note on #1530 offers help.</p></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>GridCraft</strong><span>Spreadsheets</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>No local checkout of the app</div></td>
+          <td data-label="Tamil catalog">Part of kulveersingh's pull request</td>
+          <td data-label="App pull request"><a href="https://github.com/storytold/gridcraft/pull/581">gridcraft #581</a><div class="cell-note">By kulveersingh</div></td>
+          <td data-label="Font pull request">In #581</td>
+          <td data-label="Status"><div class="status"><span class="pill quiet">Open · our Tamil review posted</span></div></td>
+        </tr>
+
+        <tr>
+          <td><div class="app"><strong>Launcher</strong><span>craft-launcher</span></div></td>
+          <td data-label="Tamil screenshot"><div class="noshot"><b>No screenshot yet</b>Work deferred</div></td>
+          <td data-label="Tamil catalog"><span class="mono">craft-launcher.tsv</span> in craft-i18n #226</td>
+          <td data-label="App pull request">—</td>
+          <td data-label="Font pull request">—</td>
+          <td data-label="Status"><div class="status"><span class="pill quiet">Deferred</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="notes" aria-label="Shared pieces and notes">
+    <div class="note">
+      <h2>Shared catalogs and fonts</h2>
+      <ul>
+        <li><a href="https://github.com/storytold/craft-i18n/pull/226">craft-i18n #226</a> holds the Tamil catalogs for seven apps and the launcher. Open since 10 Nov, no maintainer review yet. It replaces the closed #150.</li>
+        <li><a href="https://github.com/storytold/craft-fonts/pull/21">craft-fonts #21</a> by kulveersingh merged on 11 Nov with Noto Sans Tamil. The four font pull requests move each app's pin to that revision.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>Every open pull request</h2>
+      <ul>
+        <li>No merge conflicts.</li>
+        <li>CI hasn't run yet: fork pull requests need a maintainer to approve the workflow runs.</li>
+        <li>A polite reminder is due about 14 days after opening: from 24 Nov for #226, 25 Nov for PdfCraft, 26 Nov for most others, 27 Nov for LightCraft.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>Not started</h2>
+      <p>TextureCraft has craft-i18n catalogs in other languages but none in Tamil. AniCraft, DesignCraft, EffectCraft, FigCraft, MaterialCraft and SoundCraft have no craft-i18n catalogs; their own repositories weren't checked.</p>
+      <p style="margin-top:8px">Every Tamil catalog is AI-assisted and still needs a native speaker's review.</p>
+    </div>
+  </section>
+
+  <footer>Tamil work by <a href="https://github.com/newsbaba24x7">@newsbaba24x7</a>. Pull request states were read from GitHub on 13 Nov 2026.</footer>
+</div>
+
+<dialog id="viewer" aria-label="Screenshot">
+  <img id="viewer-img" alt="">
+  <div class="dlg-bar"><p id="viewer-cap"></p><button type="button" id="viewer-close">Close</button></div>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('viewer');
+  var img = document.getElementById('viewer-img');
+  var cap = document.getElementById('viewer-cap');
+  document.querySelectorAll('.shot').forEach(function (b) {
+    b.addEventListener('click', function () {
+      img.src = b.getAttribute('data-full');
+      img.alt = b.querySelector('img').alt;
+      cap.textContent = b.getAttribute('data-cap');
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    });
+  });
+  document.getElementById('viewer-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>
