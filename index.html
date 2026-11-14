@@ -201,7 +201,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Tamil interface · <span class="mono">ta</span> · checked 14 Nov 2026</div>
+    <div class="eyebrow">Tamil interface · <span class="mono">ta</span> · checked 15 Nov 2026</div>
     <h1>ArtCraft in Tamil <span class="ta">தமிழ்</span></h1>
     <p class="lede">Where each Craft app's Tamil interface stands: the catalog in craft-i18n, the pull request that switches Tamil on in the app, the craft-fonts pin that brings Noto Sans Tamil, and a screenshot of the app running in Tamil where one exists.</p>
     <div class="summary" aria-label="Summary">
@@ -248,10 +248,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">Edit menu and panels · 14 Nov</span>
             </button>
           </td>
-          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span>, 9,341 rows, 3,444 of them messages<div class="cell-note">Also <span class="mono">vectorcraft.tsv</span> in craft-i18n #226</div></td>
+          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span>, 9,479 rows, 3,577 of them messages<div class="cell-note">Also <span class="mono">vectorcraft.tsv</span> in craft-i18n #226</div></td>
           <td data-label="App pull request"><a href="https://github.com/storytold/vectorcraft/pull/6883">vectorcraft #6883</a></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/vectorcraft/pull/6896">vectorcraft #6896</a></td>
-          <td data-label="Status"><div class="status"><span class="pill review">Open · font PR reviewed</span><p>FredApps reviewed #6896 and the fixes are in; bflatastic commented. Upstream main is merged in whenever it conflicts, to keep the pull request mergeable.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill review">Open · font PR reviewed</span><p>FredApps reviewed #6896 and the fixes are in; bflatastic commented. Upstream main is merged in when it brings English strings that Tamil needs.</p></div></td>
         </tr>
 
         <tr>
@@ -320,7 +320,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog"><span class="mono">deckcraft.tsv</span> in craft-i18n #226, 1,428 rows</td>
           <td data-label="App pull request">Not opened yet<div class="cell-note">Ready on a local branch · claimed in <a href="https://github.com/storytold/deckcraft/issues/1785">deckcraft #1785</a></div></td>
           <td data-label="Font pull request">Needed later<div class="cell-note">DeckCraft's pinned craft-fonts has no Tamil face</div></td>
-          <td data-label="Status"><div class="status"><span class="pill blocked">Blocked</span><p>Waits for <a href="https://github.com/storytold/deckcraft/pull/1488">#1488</a> (craft-i18n wiring) and <a href="https://github.com/storytold/deckcraft/pull/1530">#1530</a> (interface fonts). A note on #1530 offers help.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill blocked">Blocked</span><p>Waits for <a href="https://github.com/storytold/deckcraft/pull/1488">#1488</a> (craft-i18n wiring) and <a href="https://github.com/storytold/deckcraft/pull/1530">#1530</a> (interface fonts). A note on #1530 offers help; #1530 now has changes requested.</p></div></td>
         </tr>
 
         <tr>
@@ -353,11 +353,20 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
       </ul>
     </div>
     <div class="note">
-      <h2>Every open pull request</h2>
+      <h2>Our open pull requests</h2>
       <ul>
         <li>No merge conflicts.</li>
         <li>CI hasn't run yet: fork pull requests need a maintainer to approve the workflow runs.</li>
         <li>A polite reminder is due about 14 days after opening: from 24 Nov for #226, 25 Nov for PdfCraft, 26 Nov for most others, 27 Nov for LightCraft.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>Kept level with English</h2>
+      <p>When the English or the European catalogs change, Tamil follows. On 14 and 15 Nov Tamil gained the strings the European catalogs had added:</p>
+      <ul>
+        <li>craft-i18n #226: 46 PhotoCraft, 72 CADCraft and 36 WordCraft rows, and PdfCraft's native-review corrections (Fill &amp; Sign, Protect, Scan வருடு, OCR ஒளியியல் எழுத்துணரி).</li>
+        <li>vectorcraft #6883: 138 rows, mostly status and error messages. The untranslated report now lists 20 Tamil messages, as for German (19) and Italian (21).</li>
+        <li>lightcraft #4200: 12 labels, and the Upright rows follow main's new Perspective names. The gap report lists no Tamil message.</li>
       </ul>
     </div>
     <div class="note">
@@ -367,7 +376,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
     </div>
   </section>
 
-  <footer>Tamil work by <a href="https://github.com/newsbaba24x7">@newsbaba24x7</a>. Pull request states were read from GitHub on 13 Nov 2026.</footer>
+  <footer>Tamil work by <a href="https://github.com/newsbaba24x7">@newsbaba24x7</a>. Pull request states were read from GitHub on 15 Nov 2026.</footer>
 </div>
 
 <dialog id="viewer" aria-label="Screenshot">
