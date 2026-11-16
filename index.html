@@ -152,6 +152,10 @@ td li + li { margin-top: 2px; }
 .pill.quiet { color: var(--quiet); background: var(--quiet-bg); }
 .status { display: grid; gap: 6px; min-width: 200px; max-width: 260px; }
 .status p { margin: 0; font-size: 13.5px; }
+.status .facts { color: var(--muted); font-size: 13px; }
+.facts b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.facts .rv { color: var(--merged); font-weight: 600; }
+.facts .rv.next { color: var(--quiet); }
 
 /* Notes */
 .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
@@ -206,9 +210,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
     <p class="lede">Where each Craft app's Tamil interface stands: the catalog in craft-i18n, the pull request that switches Tamil on in the app, the craft-fonts pin that brings Noto Sans Tamil, and a screenshot of the app running in Tamil where one exists.</p>
     <div class="summary" aria-label="Summary">
       <span class="chip merged"><b>1</b> app merged</span>
-      <span class="chip open"><b>7</b> app pull requests open</span>
-      <span class="chip open"><b>4</b> font pin pull requests open</span>
+      <span class="chip open"><b>6</b> app pull requests open</span>
+      <span class="chip open"><b>5</b> font pin pull requests open</span>
       <span class="chip blocked"><b>1</b> app blocked</span>
+      <span class="chip merged"><b>8</b> apps reviewed by native speakers</span>
       <span class="chip quiet"><b>9</b> screenshots so far</span>
     </div>
   </header>
@@ -234,10 +239,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">Export As dialog and panels · 4 Nov</span>
             </button>
           </td>
-          <td data-label="Tamil catalog">In the app; strings the current app shows added in <a href="https://github.com/storytold/craft-i18n/pull/226">craft-i18n #226</a></td>
+          <td data-label="Tamil catalog"><span class="mono">photocraft.tsv</span> in craft-i18n, which the app reads; strings the current app shows added in <a href="https://github.com/storytold/craft-i18n/pull/226">craft-i18n #226</a></td>
           <td data-label="App pull request"><a href="https://github.com/storytold/photocraft/pull/10359">photocraft #10359</a></td>
           <td data-label="Font pull request">—</td>
-          <td data-label="Status"><div class="status"><span class="pill merged">Merged 6 Nov</span></div></td>
+          <td data-label="Status"><div class="status"><span class="pill merged">Merged 6 Nov</span><p class="facts"><b>4,277</b> rows · <span class="rv">✓ Native review done</span> · 14 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -248,10 +253,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">Edit menu and panels · 14 Nov</span>
             </button>
           </td>
-          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span>, 9,638 rows, 3,636 of them messages<div class="cell-note">Also <span class="mono">vectorcraft.tsv</span> in craft-i18n #226</div></td>
+          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span><div class="cell-note">Also <span class="mono">vectorcraft.tsv</span> in craft-i18n #226</div></td>
           <td data-label="App pull request"><a href="https://github.com/storytold/vectorcraft/pull/6883">vectorcraft #6883</a></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/vectorcraft/pull/6896">vectorcraft #6896</a></td>
-          <td data-label="Status"><div class="status"><span class="pill review">Approved · waiting for CI</span><p>bflatastic approved #6883 on 15 Nov and asked for current main; it is merged in, with 159 new Tamil rows. FredApps reviewed the font PR #6896 and the fixes are in.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill review">Approved · waiting for CI</span><p>bflatastic approved #6883 on 15 Nov and asked for current main; it was merged in, with 159 new Tamil rows. Main has moved on again, so #6883 needs it merged in once more. FredApps reviewed the font PR #6896 and the fixes are in.</p><p class="facts"><b>9,638</b> rows, 3,636 of them messages · <span class="rv">✓ Native review done</span> · 14 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -265,7 +270,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog"><span class="mono">pdfcraft.tsv</span> in craft-i18n #226</td>
           <td data-label="App pull request"><a href="https://github.com/storytold/pdfcraft/pull/7005">pdfcraft #7005</a><div class="cell-note">Replaces the closed #5735</div></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/pdfcraft/pull/7129">pdfcraft #7129</a></td>
-          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p class="facts"><b>2,874</b> rows · <span class="rv">✓ Native review done</span> · 14 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -276,10 +281,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">Drawing workspace · 12 Nov</span>
             </button>
           </td>
-          <td data-label="Tamil catalog"><span class="mono">cadcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span><div class="cell-note">Also <span class="mono">cadcraft.tsv</span> in craft-i18n #226</div></td>
           <td data-label="App pull request"><a href="https://github.com/storytold/cadcraft/pull/3105">cadcraft #3105</a></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/cadcraft/pull/3106">cadcraft #3106</a></td>
-          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>Current main merged in on 16 Nov.</p><p class="facts"><b>1,507</b> rows · <span class="rv">✓ Native review done</span> · 14 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -293,7 +298,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog">In the app (none in craft-i18n)</td>
           <td data-label="App pull request"><a href="https://github.com/storytold/lightcraft/pull/4200">lightcraft #4200</a></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/lightcraft/pull/4199">lightcraft #4199</a></td>
-          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>#4199 merges first; #4200 then needs its NOTICE and ATTRIBUTION conflicts resolved.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>#4199 merges first; #4200 then needs its NOTICE and ATTRIBUTION conflicts resolved.</p><p class="facts"><b>2,999</b> rows: 2,662 messages, 337 formats · <span class="rv">✓ Native review done</span> · 15 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -304,10 +309,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">File menu and timeline · 15 Nov</span>
             </button>
           </td>
-          <td data-label="Tamil catalog"><span class="mono">filmcraft.tsv</span> in craft-i18n #226</td>
+          <td data-label="Tamil catalog">In the app: <span class="mono">ta.tsv</span><div class="cell-note">Also <span class="mono">filmcraft.tsv</span> in craft-i18n #226</div></td>
           <td data-label="App pull request"><a href="https://github.com/storytold/filmcraft/pull/4725">filmcraft #4725</a></td>
           <td data-label="Font pull request">—</td>
-          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>Current main merged in on 15 Nov.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>Current main merged in on 15 Nov.</p><p class="facts"><b>3,734</b> rows · <span class="rv">✓ Native review done</span> · 15 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -321,7 +326,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog"><span class="mono">wordcraft.tsv</span> in craft-i18n #226</td>
           <td data-label="App pull request"><a href="https://github.com/storytold/wordcraft/pull/6392">wordcraft #6392</a></td>
           <td data-label="Font pull request">—</td>
-          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>Current main merged in on 15 Nov.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Open · waiting for review</span><p>Current main merged in on 15 Nov.</p><p class="facts"><b>2,767</b> rows · <span class="rv">✓ Native review done</span> · 15 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -332,10 +337,10 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
               <span class="cap">Transitions tab and Preferences · 13 Nov · local build</span>
             </button>
           </td>
-          <td data-label="Tamil catalog"><span class="mono">deckcraft.tsv</span> in craft-i18n #226, 1,428 rows</td>
+          <td data-label="Tamil catalog"><span class="mono">deckcraft.tsv</span> in craft-i18n #226</td>
           <td data-label="App pull request">Not opened yet<div class="cell-note">Ready on a local branch · claimed in <a href="https://github.com/storytold/deckcraft/issues/1785">deckcraft #1785</a></div></td>
           <td data-label="Font pull request">Needed later<div class="cell-note">DeckCraft's pinned craft-fonts has no Tamil face</div></td>
-          <td data-label="Status"><div class="status"><span class="pill blocked">Blocked</span><p>Waits for <a href="https://github.com/storytold/deckcraft/pull/1488">#1488</a> (craft-i18n wiring) and <a href="https://github.com/storytold/deckcraft/pull/1530">#1530</a> (interface fonts). A note on #1530 offers help; #1530 now has changes requested.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill blocked">Blocked</span><p>Waits for <a href="https://github.com/storytold/deckcraft/pull/1488">#1488</a> (craft-i18n wiring) and <a href="https://github.com/storytold/deckcraft/pull/1530">#1530</a> (interface fonts). A note on #1530 offers help; #1530 now has changes requested.</p><p class="facts"><b>1,422</b> rows · <span class="rv">✓ Native review done</span> · 14 Nov</p></div></td>
         </tr>
 
         <tr>
@@ -349,7 +354,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog"><span class="mono">ta.rs</span> on a local branch</td>
           <td data-label="App pull request">Not opened yet<div class="cell-note">Tamil only, claimed in <a href="https://github.com/storytold/gridcraft/issues/2376">gridcraft #2376</a> · <a href="https://github.com/storytold/gridcraft/pull/581">#581</a> by kulveersingh covers ten Indian languages</div></td>
           <td data-label="Font pull request"><a href="https://github.com/storytold/gridcraft/pull/4317">gridcraft #4317</a><div class="cell-note">craft-fonts pin with Noto Sans Tamil</div></td>
-          <td data-label="Status"><div class="status"><span class="pill open">Font pull request open</span><p>The Tamil pull request follows after native review.</p></div></td>
+          <td data-label="Status"><div class="status"><span class="pill open">Font pull request open</span><p>The Tamil pull request follows after native review.</p><p class="facts"><b>1,802</b> rows · <span class="rv next">Native review next</span></p></div></td>
         </tr>
 
         <tr>
@@ -358,7 +363,7 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
           <td data-label="Tamil catalog"><span class="mono">craft-launcher.tsv</span> in craft-i18n #226</td>
           <td data-label="App pull request">—</td>
           <td data-label="Font pull request">—</td>
-          <td data-label="Status"><div class="status"><span class="pill quiet">Deferred</span></div></td>
+          <td data-label="Status"><div class="status"><span class="pill quiet">Deferred</span><p class="facts"><b>276</b> rows · <span class="rv">✓ Language and terms reviewed</span></p></div></td>
         </tr>
       </tbody>
     </table>
@@ -392,7 +397,8 @@ dialog img { display: block; width: 100%; height: auto; max-height: 82vh; object
     <div class="note">
       <h2>Not started</h2>
       <p>TextureCraft has craft-i18n catalogs in other languages but none in Tamil. AniCraft, DesignCraft, EffectCraft, FigCraft, MaterialCraft and SoundCraft have no craft-i18n catalogs; their own repositories weren't checked.</p>
-      <p style="margin-top:8px">Every Tamil catalog is AI-assisted. Native speakers have reviewed PhotoCraft, VectorCraft, DeckCraft, CADCraft, PdfCraft, LightCraft, WordCraft and FilmCraft in the running app; craft-i18n #226 records it in ATTRIBUTION.md. GridCraft and the launcher are next.</p>
+      <p style="margin-top:8px">Every Tamil catalog is AI-assisted. Native speakers Radhika and Mohan Raj have reviewed PhotoCraft, VectorCraft, DeckCraft, CADCraft and PdfCraft (14 Nov) and LightCraft, WordCraft and FilmCraft (15 Nov) in the running app, with screenshots. ATTRIBUTION.md records it in craft-i18n #226 and in the CADCraft and LightCraft pull requests. The shared catalog (<span class="mono">common.tsv</span>, 1,302 rows) and the launcher's were reviewed for language and terms. GridCraft is next.</p>
+      <p style="margin-top:8px">Rows are the Tamil catalog rows each app's pull request ships, or for PhotoCraft the rows on craft-i18n's main, counted on 16 Nov. Apps that read craft-i18n also use the shared catalog.</p>
     </div>
   </section>
 
